@@ -1,6 +1,9 @@
 spring:
   application:
     name: ProductAutoComplete
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
   
 logging:
   level:
@@ -8,5 +11,6 @@ logging:
       rippmn:
         product:
           web: DEBUG
+          
     
   
