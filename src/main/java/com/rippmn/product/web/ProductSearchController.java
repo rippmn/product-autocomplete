@@ -14,27 +14,27 @@ import com.rippmn.product.persistence.ProductRepository;
 
 @RestController
 public class ProductSearchController {
-	
-	private static Logger log = LoggerFactory.getLogger(ProductSearchController.class); 
-	
+
+	private static Logger log = LoggerFactory.getLogger(ProductSearchController.class);
+
 	@Autowired
 	ProductRepository productRepo;
-	
+
 	@RequestMapping("/")
 	public String hello() {
 		log.debug("returning homepage");
-		return new Date().toString();
+		return new Date().toString() + "-v_gaeflex";
 	}
 
-	
+
 	@RequestMapping("/products")
 	public Iterable<Product> allProducts(){
 		return productRepo.findAll();
 	}
-	
+
 	@RequestMapping("/productAutoComplete")
 	public Iterable<Product> productAutoComplete(@RequestParam("startsWith") String startsWith){
 		return productRepo.findByNameStartingWith(startsWith);
 	}
-	
+
 }
