@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rippmn.product.domain.Product;
 import com.rippmn.product.persistence.ProductRepository;
 
 @RestController
@@ -17,6 +16,7 @@ public class ProductSearchController {
 
 	private static Logger log = LoggerFactory.getLogger(ProductSearchController.class);
 
+	
 	@Autowired
 	ProductRepository productRepo;
 
@@ -27,14 +27,21 @@ public class ProductSearchController {
 	}
 
 
-	@RequestMapping("/products")
-	public Iterable<Product> allProducts(){
-		return productRepo.findAll();
-	}
+//	@RequestMapping("/products")
+//	public Iterable<Product> allProducts(){
+//		return productRepo.findAll();
+//	}
 
 	@RequestMapping("/productAutoComplete")
-	public Iterable<Product> productAutoComplete(@RequestParam("startsWith") String startsWith){
+	public Iterable<String> productAutoComplete(@RequestParam("startsWith") String startsWith){
+		
 		return productRepo.findByNameStartingWith(startsWith);
+	}
+	
+	@RequestMapping("/createProd")
+	public String createProduct() {
+		
+		return productRepo.createProduct(); 
 	}
 
 }

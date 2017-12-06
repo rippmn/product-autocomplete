@@ -1,11 +1,9 @@
 package com.rippmn.product.persistence;
 
-import org.springframework.data.repository.CrudRepository;
+public interface ProductRepository{ 
 
-import com.rippmn.product.domain.Product;
-
-public interface ProductRepository extends CrudRepository<Product, Long> {
-
-	public Iterable<Product> findByNameStartingWith(String name);
+	public Iterable<String> findByNameStartingWith(String name);
+	
+	public String createProduct();
 	
 }
