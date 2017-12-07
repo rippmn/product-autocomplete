@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Autocomplete - Default functionality</title>
+  <title>Product Autocomplete</title>
   <link rel="stylesheet" href="css/jquery-ui.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/jquery-1.12.4.js"></script>
@@ -15,7 +15,7 @@
     $( "#log" ).scrollTop( 0 );
   }
 
-  $( "#tags" ).autocomplete({
+  $( "#products" ).autocomplete({
     source: "productNames",
     minLength: 2,
     select: function( event, ui ) {
@@ -29,8 +29,8 @@
 <body>
 
 <div class="ui-widget">
-  <label for="tags">Tags: </label>
-  <input id="tags">
+  <label for="products">Product: </label>
+  <input id="products">
 </div>
 
 
