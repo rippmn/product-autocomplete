@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.appengine.api.datastore.Entity;
+import com.rippmn.product.persistence.Product;
 import com.rippmn.product.persistence.ProductRepository;
 
 @RestController
@@ -48,14 +48,19 @@ public class ProductSearchController {
 		return theKeys;
 		
 	}
+	
+	@RequestMapping("/products")
+	public Iterable<Product> getProducts(){
+		return productRepo.getProducts();
+	}
 
 	@RequestMapping("/productNames")
 	public Iterable<String> productNameSearch(@RequestParam("term") String term){
 		ArrayList<String> names = new ArrayList<String>();
 
-		for(Entity p:productRepo.findByNameStartingWith(term)) {
-			names.add((String)p.getProperty("name"));
-		}
+		//for(Entity p:productRepo.findByNameStartingWith(term)) {
+		//	names.add((String)p.getProperty("name"));
+		//}
 
 		return names;
 	}

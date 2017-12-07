@@ -67,8 +67,9 @@
 
 
 		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-datastore</artifactId>
+			<version>1.12.0</version>
 		</dependency>
 	</dependencies>
 
