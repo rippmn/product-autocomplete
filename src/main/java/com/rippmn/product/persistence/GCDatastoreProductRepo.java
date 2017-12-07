@@ -68,18 +68,4 @@ public class GCDatastoreProductRepo implements ProductRepository {
 		return products.build();
 	}
 	
-	
-
-	@Override
-	public String createProduct(String name, String sku) {
-
-		IncompleteKey key = keyFactory.newKey();
-
-		FullEntity<IncompleteKey> productEntity = Entity.newBuilder(key).set("sku", sku).set("name", name).build();
-
-		datastore.put(productEntity);
-		return key.toString(); // The ID of the Key
-
-	}
-
 }

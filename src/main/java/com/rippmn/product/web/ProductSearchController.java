@@ -36,19 +36,6 @@ public class ProductSearchController {
 		return productNameSearch(startsWith);
 	}
 	
-	@RequestMapping("/createProds")
-	public Iterable<String> createProduct() {
-		
-		ArrayList<String> theKeys = new ArrayList<String>();
-		
-		for(String[] prod: products) {
-			theKeys.add(productRepo.createProduct(prod[1], prod[0]));
-		}
-		
-		return theKeys;
-		
-	}
-	
 	@RequestMapping("/products")
 	public Iterable<Product> getProducts(){
 		return productRepo.getProducts();

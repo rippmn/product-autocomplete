@@ -6,6 +6,4 @@ public interface ProductRepository{
 	
 	public Iterable<String> findByNameStartingWith(String name);
 	
-	public String createProduct(String name, String sku);
-	
 }
