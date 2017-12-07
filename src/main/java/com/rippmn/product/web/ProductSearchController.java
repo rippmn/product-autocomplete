@@ -1,5 +1,6 @@
 package com.rippmn.product.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class ProductSearchController {
 	@Autowired
 	ProductRepository productRepo;
 
-	@RequestMapping("/")
+	@RequestMapping("/health")
 	public String hello() {
 		log.debug("returning homepage");
 		return new Date().toString() + "-v_gae-std";
@@ -35,6 +36,17 @@ public class ProductSearchController {
 	@RequestMapping("/productAutoComplete")
 	public Iterable<Product> productAutoComplete(@RequestParam("startsWith") String startsWith){
 		return productRepo.findByNameStartingWith(startsWith);
+	}
+
+	@RequestMapping("/productNames")
+	public Iterable<String> productNameSearch(@RequestParam("term") String term){
+		ArrayList<String> names = new ArrayList<String>();
+
+		for(Product p:productRepo.findByNameStartingWith(term)) {
+			names.add(p.getName());
+		}
+
+		return names;
 	}
 
 }
