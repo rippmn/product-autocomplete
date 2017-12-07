@@ -1,8 +1,5 @@
 package com.rippmn.product.persistence;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -12,6 +9,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PropertyProjection;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 @Repository
 public class GCDatastoreProductRepo implements ProductRepository {
@@ -31,9 +29,12 @@ public class GCDatastoreProductRepo implements ProductRepository {
 		
 		Query query = new Query(PRODUCT_NAME_KIND);
 		query.addProjection(new PropertyProjection("name", String.class));
+		query.addFilter("name", FilterOperator.GREATER_THAN_OR_EQUAL, name).addFilter("name", FilterOperator.LESS_THAN, name+"{");
 		return datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 		
 	}
+	
+	//public Iterable<Entity> listProd
 
 	@Override
 	public String createProduct(String name, String sku) {
