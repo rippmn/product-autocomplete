@@ -1,9 +1,11 @@
 package com.rippmn.product.persistence;
 
+import com.google.appengine.api.datastore.Entity;
+
 public interface ProductRepository{ 
 
-	public Iterable<String> findByNameStartingWith(String name);
+	public Iterable<Entity> findByNameStartingWith(String name);
 	
-	public String createProduct();
+	public String createProduct(String name, String sku);
 	
 }

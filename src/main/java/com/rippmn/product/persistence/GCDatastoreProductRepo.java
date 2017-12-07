@@ -27,27 +27,20 @@ public class GCDatastoreProductRepo implements ProductRepository {
 	  }
 
 	@Override
-	public Iterable<String> findByNameStartingWith(String name) {
+	public Iterable<Entity> findByNameStartingWith(String name) {
 		
 		Query query = new Query(PRODUCT_NAME_KIND);
 		query.addProjection(new PropertyProjection("name", String.class));
-		List<Entity> productNames = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		return datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
 		
-		ArrayList<String> names = new ArrayList<String>(productNames.size());
-		
-		for(Entity result:productNames) {
-			names.add((String)result.getProperty("name"));
-		}
-		
-		return names;
 	}
 
 	@Override
-	public String createProduct() {
+	public String createProduct(String name, String sku) {
 		
 		Entity incProduct = new Entity(PRODUCT_NAME_KIND);  // Key will be assigned once written
-		incProduct.setProperty("sku", Integer.toString(prodCount));
-		incProduct.setProperty("name", "prod " + prodCount);
+		incProduct.setProperty("sku", sku);
+		incProduct.setProperty("name", name);
 
 	    Key prodKey = datastore.put(incProduct); // Save the Entity
 	    return Long.toString(prodKey.getId());                     // The ID of the Key
