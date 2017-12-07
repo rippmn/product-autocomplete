@@ -27,7 +27,7 @@ public class ProductSearchController {
 	@RequestMapping("/health")
 	public String hello() {
 		log.debug("returning homepage");
-		return new Date().toString() + "-v_gae-std";
+		return new Date().toString() + "-v_gae-std-gcds";
 	}
 
 	@RequestMapping("/productAutoComplete")
