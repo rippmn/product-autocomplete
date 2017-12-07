@@ -56,13 +56,8 @@ public class ProductSearchController {
 
 	@RequestMapping("/productNames")
 	public Iterable<String> productNameSearch(@RequestParam("term") String term){
-		ArrayList<String> names = new ArrayList<String>();
-
-		//for(Entity p:productRepo.findByNameStartingWith(term)) {
-		//	names.add((String)p.getProperty("name"));
-		//}
-
-		return names;
+		
+		return productRepo.findByNameStartingWith(term);
 	}
 
 }

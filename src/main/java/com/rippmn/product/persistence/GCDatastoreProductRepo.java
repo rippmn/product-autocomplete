@@ -9,8 +9,12 @@ import com.google.cloud.datastore.EntityQuery;
 import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.IncompleteKey;
 import com.google.cloud.datastore.KeyFactory;
+import com.google.cloud.datastore.ProjectionEntity;
+import com.google.cloud.datastore.ProjectionEntityQuery;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
+import com.google.cloud.datastore.StructuredQuery.CompositeFilter;
+import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 
@@ -24,26 +28,26 @@ public class GCDatastoreProductRepo implements ProductRepository {
 
 	private final KeyFactory keyFactory = datastore.newKeyFactory().setKind(PRODUCT_NAME_KIND);
 
-	// public GCDatastoreProductRepo() {
-	// datastore = DatastoreServiceFactory.getDatastoreService(); // Authorized
-	// Datastore service
-	//
-	//
-	//
-	// }
+	@Override
+	public Iterable<String> findByNameStartingWith(String name) {
 
-	// @Override
-	// public Iterable<Entity> findByNameStartingWith(String name) {
-	//
-	// Query query = new Query(PRODUCT_NAME_KIND);
-	// query.addProjection(new PropertyProjection("name", String.class));
-	//
-	// query.setFilter(CompositeFilterOperator.and(FilterOperator.GREATER_THAN_OR_EQUAL.of("name",
-	// name), FilterOperator.LESS_THAN.of("name", name.concat("{"))));
-	// return datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
-	//
-	// }
-	//
+		ProjectionEntityQuery projectionQuery = Query.newProjectionEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
+				.setProjection("name")
+				//need to filter
+				.setFilter(CompositeFilter.and(PropertyFilter.ge("name", name), PropertyFilter.lt("name", name.concat("{"))))
+				.build();
+		
+		QueryResults<ProjectionEntity> productNames = datastore.run(projectionQuery);
+		
+		Builder<String> names = ImmutableList.builder();
+		
+		while(productNames.hasNext()) {
+			ProjectionEntity p = productNames.next();
+			names.add(p.getString("name"));
+		}
+
+		return names.build();
+	}
 
 	public Iterable<Product> getProducts() {
 
@@ -61,15 +65,10 @@ public class GCDatastoreProductRepo implements ProductRepository {
 			products.add(new Product(prod.getString("sku"), prod.getString("name")));
 
 		}
-
 		return products.build();
 	}
-
-	@Override
-	public Iterable<Product> findByNameStartingWith(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
 	@Override
 	public String createProduct(String name, String sku) {
