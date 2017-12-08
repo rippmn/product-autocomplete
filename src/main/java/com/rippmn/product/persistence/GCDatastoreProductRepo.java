@@ -1,14 +1,13 @@
 package com.rippmn.product.persistence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.EntityQuery;
-import com.google.cloud.datastore.FullEntity;
-import com.google.cloud.datastore.IncompleteKey;
-import com.google.cloud.datastore.KeyFactory;
 import com.google.cloud.datastore.ProjectionEntity;
 import com.google.cloud.datastore.ProjectionEntityQuery;
 import com.google.cloud.datastore.Query;
@@ -21,16 +20,18 @@ import com.google.common.collect.ImmutableList.Builder;
 @Repository
 public class GCDatastoreProductRepo implements ProductRepository {
 
+	private static final Logger logger = LoggerFactory.getLogger(GCDatastoreProductRepo.class);
+	
 	// private DatastoreService datastore;
 	private static final String PRODUCT_NAME_KIND = "test";
 
 	private final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
-	private final KeyFactory keyFactory = datastore.newKeyFactory().setKind(PRODUCT_NAME_KIND);
-
 	@Override
 	public Iterable<String> findByNameStartingWith(String name) {
 
+		logger.info("retrieving product names containing " + name);
+		
 		ProjectionEntityQuery projectionQuery = Query.newProjectionEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
 				.setProjection("name")
 				//need to filter
