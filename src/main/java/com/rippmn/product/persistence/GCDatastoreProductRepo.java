@@ -27,11 +27,12 @@ public class GCDatastoreProductRepo implements ProductRepository {
 
 	@Override
 	public Iterable<String> findByNameStartingWith(String name) {
-
+		
+		String lowerName = name.toLowerCase();
 		logger.info("retrieving product names containing " + name);
 		
 		EntityQuery prodQuery = Query.newEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
-				.setFilter(CompositeFilter.and(PropertyFilter.ge("tag", name), PropertyFilter.lt("tag", name.concat("{"))))
+				.setFilter(CompositeFilter.and(PropertyFilter.ge("tag", lowerName), PropertyFilter.lt("tag", lowerName.concat("{"))))
 				.build();
 				
 		QueryResults<Entity> results = datastore.run(prodQuery);
