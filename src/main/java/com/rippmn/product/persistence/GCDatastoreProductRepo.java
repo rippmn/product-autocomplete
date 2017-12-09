@@ -23,7 +23,7 @@ public class GCDatastoreProductRepo implements ProductRepository {
 	private static final Logger logger = LoggerFactory.getLogger(GCDatastoreProductRepo.class);
 	
 	// private DatastoreService datastore;
-	private static final String PRODUCT_NAME_KIND = "test";
+	private static final String PRODUCT_NAME_KIND = "taggedprod";
 
 	private final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
@@ -62,11 +62,13 @@ public class GCDatastoreProductRepo implements ProductRepository {
 
 		while (prods.hasNext()) {
 			Entity prod = prods.next();
-
-			products.add(new Product(prod.getString("sku"), prod.getString("name")));
+			
+			products.add(new Product(prod.getKey().getName(), prod.getString("name"), prod.getList("tag")));
 
 		}
 		return products.build();
 	}
+	
+	
 	
 }

@@ -1,6 +1,5 @@
 package com.rippmn.product.web;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.slf4j.Logger;
