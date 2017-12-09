@@ -8,8 +8,6 @@ import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.EntityQuery;
-import com.google.cloud.datastore.ProjectionEntity;
-import com.google.cloud.datastore.ProjectionEntityQuery;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
 import com.google.cloud.datastore.StructuredQuery.CompositeFilter;
@@ -32,18 +30,16 @@ public class GCDatastoreProductRepo implements ProductRepository {
 
 		logger.info("retrieving product names containing " + name);
 		
-		ProjectionEntityQuery projectionQuery = Query.newProjectionEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
-				.setProjection("name")
-				//need to filter
-				.setFilter(CompositeFilter.and(PropertyFilter.ge("name", name), PropertyFilter.lt("name", name.concat("{"))))
+		EntityQuery prodQuery = Query.newEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
+				.setFilter(CompositeFilter.and(PropertyFilter.ge("tag", name), PropertyFilter.lt("tag", name.concat("{"))))
 				.build();
-		
-		QueryResults<ProjectionEntity> productNames = datastore.run(projectionQuery);
+				
+		QueryResults<Entity> results = datastore.run(prodQuery);
 		
 		Builder<String> names = ImmutableList.builder();
 		
-		while(productNames.hasNext()) {
-			ProjectionEntity p = productNames.next();
+		while(results.hasNext()) {
+			Entity p = results.next();
 			names.add(p.getString("name"));
 		}
 
