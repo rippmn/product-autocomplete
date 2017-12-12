@@ -20,8 +20,8 @@ public class GCDatastoreProductRepo implements ProductRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger(GCDatastoreProductRepo.class);
 	
-	// private DatastoreService datastore;
-	private static final String PRODUCT_NAME_KIND = "taggedprod";
+	//TODO Convert this to a environment variable
+	private static final String PRODUCT_NAME_KIND = "productNames";
 
 	private final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
