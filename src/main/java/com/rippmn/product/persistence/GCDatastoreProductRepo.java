@@ -33,7 +33,7 @@ public class GCDatastoreProductRepo implements ProductRepository {
 		
 		EntityQuery prodQuery = Query.newEntityQueryBuilder().setKind(PRODUCT_NAME_KIND)
 				.setFilter(CompositeFilter.and(PropertyFilter.ge("tag", lowerName), PropertyFilter.lt("tag", lowerName.concat("{"))))
-				.build();
+				.setLimit(20).build();
 				
 		QueryResults<Entity> results = datastore.run(prodQuery);
 		
