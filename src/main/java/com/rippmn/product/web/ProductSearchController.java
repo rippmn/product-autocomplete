@@ -62,12 +62,12 @@ public class ProductSearchController {
 		Iterable<String> prodNames;
 		
 		if (cacheCheck) {
-			prodNames = (Iterable<String>) cache.get(term);
+			prodNames = (Iterable<String>) cache.get(term.toLowerCase());
 			if (prodNames == null) {
 				log.info("cache hit for term " + term);
 				prodNames = productRepo.findByNameStartingWith(term);
 				if (prodNames != null && prodNames.iterator().hasNext()) {
-					cache.put(term, prodNames, expiration);
+					cache.put(term.toLowerCase(), prodNames, expiration);
 				}
 				
 			}
