@@ -21,7 +21,7 @@ public class GCDatastoreProductRepo implements ProductRepository {
 	private static final Logger logger = LoggerFactory.getLogger(GCDatastoreProductRepo.class);
 	
 	//TODO Convert this to a environment variable
-	private static final String PRODUCT_NAME_KIND = "productNames";
+	private static final String PRODUCT_NAME_KIND = "productNameSearch";
 
 	private final Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
