@@ -41,7 +41,7 @@ public class ProductSearchController {
 
 	@RequestMapping("/health")
 	public String hello() {
-		log.debug("returning homepage");
+		log.debug("***HEALTH CHECK****");
 		return new Date().toString() + "-v_gae-std-gcds";
 	}
 
